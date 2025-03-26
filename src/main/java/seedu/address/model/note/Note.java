@@ -55,8 +55,15 @@ public class Note implements Comparable<Note> {
         this.dateTimeCreated = dateTimeCreated;
     }
 
+    /**
+     * Check if a note's title and contents are empty or whitespace
+     * @param title
+     * @param content
+     * @return
+     */
     public static boolean isValidNote(String title, String content) {
-        return !title.isEmpty() && !content.isEmpty();
+        // trim to make sure that title and content is not just whitespace
+        return !title.trim().isEmpty() && !content.trim().isEmpty();
     }
 
     /**

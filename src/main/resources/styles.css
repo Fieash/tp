@@ -1,0 +1,242 @@
+/* Global Styles */
+.root {
+    -fx-background-color: #1F1A38;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Main Window */
+.main-window {
+    -fx-background-color: #1F1A38;
+}
+
+/* Menu Bar */
+.menu-bar {
+    -fx-background-color: #7B506F;
+}
+.menu-bar .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #EAD7D1;
+}
+
+/* Command Box */
+.command-box {
+    -fx-background-color: #EAD7D1;
+    -fx-text-fill: #1F1A38;
+    -fx-prompt-text-fill: #7B506F;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+}
+
+.command-box-container {
+    -fx-background-color: #EAD7D1;
+    -fx-border-color: transparent;
+    -fx-border-width: 0px;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
+}
+
+/* Patient Card */
+.patient-card {
+    -fx-background-color: #2E2E3A;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
+}
+
+.patient-card:selected {
+    -fx-background-color: #7B506F;
+    -fx-border-color: #DD99BB;
+    -fx-border-width: 1px;
+    -fx-text-fill: #EAD7D1;
+}
+
+.cell-big-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #EAD7D1;
+    -fx-font-weight: bold;
+}
+
+.cell-small-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #DBCDC6;
+}
+
+/* Notes Section */
+/* Notes Section */
+.notes-container {
+    -fx-background-color: #3C3F41;
+    -fx-border-color: transparent;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px;
+    -fx-spacing: 12px; /* Increased from 8px for better spacing between notes */
+}
+
+.note-box {
+    -fx-background-color: #4A4D4F;
+    -fx-background-radius: 4px;
+    -fx-padding: 10px; /* Increased from 8px for better internal padding */
+    -fx-spacing: 6px; /* Increased from 4px for better spacing between title and date */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 3, 0, 0, 1); /* Added subtle shadow */
+}
+
+.note-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #DD99BB;
+    -fx-font-size: 13px;
+}
+
+.note-date {
+    -fx-text-fill: #A0A0A0;
+    -fx-font-size: 10px;
+    -fx-font-style: italic;
+    -fx-padding: 2px 0 0 0; /* Removed left padding */
+}
+
+/* Notes label styling */
+.notes-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #EAD7D1;
+    -fx-font-size: 13px;
+    -fx-padding: 0 0 5px 0;
+}
+
+/* Tag Styling */
+.patient-tags .label {
+    -fx-background-color: #DD99BB;
+    -fx-text-fill: #1F1A38;
+    -fx-padding: 2px 4px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 11px;
+}
+
+/* List View Styling */
+.list-panel {
+    -fx-background-color: #1F1A38;
+    -fx-border-color: transparent;
+}
+
+.list-cell {
+    -fx-background-color: #2E2E3A;
+    -fx-text-fill: #EAD7D1;
+    -fx-border-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-padding: 8px;
+    -fx-margin: 0 0 8px 0; /* Top Right Bottom Left */
+}
+
+.list-view {
+    -fx-background-color: #1F1A38;
+    -fx-padding: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-spacing: 10px; /* Adds spacing between cells */
+    -fx-cell-vertical-margin: 8px; /* Additional vertical margin */
+}
+
+.list-cell:selected {
+    -fx-background-color: #7B506F;
+    -fx-border-color: transparent;
+    -fx-text-fill: #EAD7D1;
+}
+
+/* Result Display */
+.result-display {
+    -fx-background-color: #3C3F41;
+    -fx-border-color: transparent;
+    -fx-border-width: 0px;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px;
+}
+
+.result-display .text-area {
+    -fx-background-color: #3C3F41;
+    -fx-text-fill: #DBCDC6;
+    -fx-border-width: 0;
+    -fx-wrap-text: true;
+}
+
+.result-display .text-area .content {
+    -fx-background-color: #3C3F41;
+    -fx-padding: 5px;
+}
+
+.result-display .text-area:focused .content {
+    -fx-background-color: #3C3F41;
+}
+
+/* Status Bar */
+.status-bar {
+    -fx-background-color: #7B506F;
+    -fx-padding: 5px;
+    -fx-text-fill: #EAD7D1;
+}
+
+/* Error Styles */
+.error {
+    -fx-text-fill: #d06651 !important;
+}
+
+/* ViewNotes Display Styling */
+.viewnotes-display {
+    -fx-background-color: #3C3F41;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 12px;
+}
+
+.viewnotes-header {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #EAD7D1;
+    -fx-padding: 0 0 8px 0;
+}
+
+.viewnotes-container {
+    -fx-spacing: 12px;
+}
+
+.viewnotes-entry {
+    -fx-background-color: #4A4D4F;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px;
+    -fx-spacing: 6px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.viewnotes-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #DD99BB;
+}
+
+.viewnotes-content {
+    -fx-font-size: 13px;
+    -fx-text-fill: #DBCDC6;
+    -fx-wrap-text: true;
+    -fx-padding: 3px 0 0 8px;
+}
+
+.viewnotes-date {
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+    -fx-text-fill: #A0A0A0;
+    -fx-padding: 2px 0 0 8px;
+}
+
+/* For the TextArea in result display when showing notes */
+.notes-result-text {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-wrap-text: true;
+}
+
+/* Style for the note number */
+.note-number {
+    -fx-font-weight: bold;
+    -fx-text-fill: #DD99BB;
+    -fx-font-size: 14px;
+}

@@ -15,8 +15,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ViewNotesCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.patient.Patient;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -33,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PatientListPanel patientListPanel;
+    private NotesDisplayPanel notesDisplayPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -47,6 +50,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane notesDisplayPanelPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -120,6 +126,9 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
+        notesDisplayPanel = new NotesDisplayPanel();
+        notesDisplayPanelPlaceholder.getChildren().add(notesDisplayPanel.getRoot());
+
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
@@ -185,7 +194,16 @@ public class MainWindow extends UiPart<Stage> {
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            // Check if this is a ViewNotesCommand result
+            if (commandText.trim().toLowerCase().startsWith(ViewNotesCommand.COMMAND_WORD)) {
+                handleViewNotesCommand(commandResult, commandText);
+            } else {
+                // Reset notes panel for non-viewnotes commands
+                notesDisplayPanel.reset();
+                // Display regular feedback in the result display
+                resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            }
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -200,6 +218,38 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        }
+    }
+
+    /**
+     * Handles the special case of a ViewNotesCommand by displaying the notes in the
+     * dedicated NotesDisplayPanel.
+     *
+     * @param commandResult The result of the command execution
+     * @param commandText The original command text
+     */
+    private void handleViewNotesCommand(CommandResult commandResult, String commandText) {
+        try {
+            String feedback = commandResult.getFeedbackToUser();
+
+            // Display a simple confirmation message in the result display
+            resultDisplay.setFeedbackToUser("Displaying notes. See notes panel below.");
+
+            // Extract the index from the command
+            String[] parts = commandText.trim().split("\\s+");
+            if (parts.length < 2) {
+                return; // Invalid command format, already handled elsewhere
+            }
+
+            int index = Integer.parseInt(parts[1]) - 1; // Convert to zero-based index
+            if (index >= 0 && index < logic.getFilteredPatientList().size()) {
+                Patient patient = logic.getFilteredPatientList().get(index);
+                notesDisplayPanel.displayNotes(patient);
+            }
+        } catch (Exception e) {
+            logger.warning("Error handling ViewNotesCommand: " + e.getMessage());
+            // Fallback to showing the raw output in case of error
+            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
         }
     }
 }

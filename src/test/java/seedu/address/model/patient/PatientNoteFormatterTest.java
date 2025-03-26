@@ -32,9 +32,10 @@ public class PatientNoteFormatterTest {
         String actualOutput = PatientNoteFormatter.formatNotes(notes);
 
         // Since TreeSet orders by dateTimeCreated, Session 1 should come first
-        String expectedOutput = "[Session 1] [Session 2]";
+        String expectedOutput = "1. Session 1\n   Content\n   2024-03-10T10:00\n\n"
+                + "2. Session 2\n   Progress update\n   2024-03-11T10:00";
 
-        // Assert that the formatted output matches the expected order
+        // Assert that the formatted output matches the expected order and format
         assertEquals(expectedOutput, actualOutput);
     }
 }

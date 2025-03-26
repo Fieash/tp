@@ -22,6 +22,7 @@ public class PatientCard extends UiPart<Region> {
 
     @FXML
     private HBox cardPane;
+
     @FXML
     private Label name;
     @FXML
@@ -57,16 +58,33 @@ public class PatientCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
-        // Display only note titles inside square brackets
-        String noteTitles = patient.getNotes().stream()
-                .sorted(Comparator.comparing(note -> note.getDateTimeCreated()))
-                .map(note -> "[" + note.getTitle() + "]")
-                .collect(Collectors.joining(" "));
+        // Display notes in a more structured way
+        // Make sure the notes container in your FXML has the notes-container style class
+        notes.getStyleClass().add("notes-container");
 
-        // Set text dynamically
-        Label notesLabel = new Label(noteTitles);
-        notesLabel.setWrapText(true);
-        notes.getChildren().add(notesLabel);
+        patient.getNotes().stream()
+                .sorted(Comparator.comparing(note -> note.getDateTimeCreated()))
+                .forEach(note -> {
+                    VBox noteBox = new VBox();
+                    noteBox.getStyleClass().add("note-box");
+
+                    // Create a label with the title and add style
+                    Label titleLabel = new Label(note.getTitle());
+                    titleLabel.getStyleClass().add("note-title");
+                    titleLabel.setWrapText(true);
+
+                    // Format the date as DD-MM-YYYY
+                    String formattedDate = note.getDateTimeCreated().format(
+                            java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                    Label dateLabel = new Label(formattedDate);
+                    dateLabel.getStyleClass().add("note-date");
+
+                    // Add the title and date directly to the noteBox
+                    noteBox.getChildren().addAll(titleLabel, dateLabel);
+
+                    // Add the noteBox directly to the notes VBox
+                    notes.getChildren().add(noteBox);
+                });
     }
 
     /**
@@ -131,8 +149,22 @@ public class PatientCard extends UiPart<Region> {
      * @return The formatted note titles.
      */
     public String getFormattedNotes() {
-        return notes.getChildren().stream()
-                .map(node -> ((Label) node).getText())
-                .collect(Collectors.joining(" "));
+        if (notes.getChildren().isEmpty() || !(notes.getChildren().get(0) instanceof VBox)) {
+            return "";
+        }
+
+        VBox notesContainer = (VBox) notes.getChildren().get(0);
+        return notesContainer.getChildren().stream()
+                .filter(node -> node instanceof VBox)
+                .map(noteBox -> {
+                    VBox box = (VBox) noteBox;
+                    if (box.getChildren().size() >= 2) {
+                        Label titleLabel = (Label) box.getChildren().get(0);
+                        Label contentLabel = (Label) box.getChildren().get(1);
+                        return titleLabel.getText() + ": " + contentLabel.getText();
+                    }
+                    return "";
+                })
+                .collect(Collectors.joining(" | "));
     }
 }

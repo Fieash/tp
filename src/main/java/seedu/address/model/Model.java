@@ -35,17 +35,17 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' app file path.
      */
     Path getAddressBookFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' app file path.
      */
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces app data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
 
@@ -53,13 +53,13 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a patient with the same identity as {@code patient} exists in the address book.
+     * Returns true if a patient with the same identity as {@code patient} exists in the app.
      */
     boolean hasPatient(Patient patient);
 
     /**
      * Deletes the given patient.
-     * The patient must exist in the address book.
+     * The patient must exist in the app.
      */
     void deletePatient(Patient target);
 
@@ -73,15 +73,15 @@ public interface Model {
 
     /**
      * Adds the given patient.
-     * {@code patient} must not already exist in the address book.
+     * {@code patient} must not already exist in the app.
      */
     void addPatient(Patient patient);
 
     /**
      * Replaces the given patient {@code target} with {@code editedPatient}.
-     * {@code target} must exist in the address book.
+     * {@code target} must exist in the app.
      * The patient identity of {@code editedPatient} must not be the same as another
-     * existing patient in the address book.
+     * existing patient in the app.
      */
     void setPatient(Patient target, Patient editedPatient);
 

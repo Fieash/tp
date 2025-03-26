@@ -1,41 +1,56 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
+import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.note.Note;
 
 /**
  * Represents the result of a command execution.
  */
 public class CommandResult {
-
     private final String feedbackToUser;
-
-    /** Help information should be shown to the user. */
     private final boolean showHelp;
-
-    /** The application should exit. */
     private final boolean exit;
+    private final boolean showNotes;
+    private final String patientName;
+    private final List<Note> notesList;
+
+    // Regular constructor for normal commands
+    public CommandResult(String feedbackToUser) {
+        this(feedbackToUser, false, false, false, null, null);
+    }
+
+    // Constructor for help and exit commands
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+        this(feedbackToUser, showHelp, exit, false, null, null);
+    }
 
     /**
-     * Constructs a {@code CommandResult} with the specified fields.
+     * Constructs a {@code CommandResult} object with the given parameters.
+     * This constructor is used for initializing the command result with feedback,
+     * help status, exit status, notes display, patient information, and a list of notes.
+     *
+     * @param feedbackToUser The feedback message to be displayed to the user.
+     * @param showHelp A boolean flag indicating whether the help screen should be shown.
+     * @param exit A boolean flag indicating whether the application should exit.
+     * @param showNotes A boolean flag indicating whether the notes should be displayed.
+     * @param patientName The name of the patient related to the notes.
+     * @param notesList A list of {@code Note} objects associated with the patient.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this.feedbackToUser = requireNonNull(feedbackToUser);
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
+                         boolean showNotes, String patientName, List<Note> notesList) {
+        this.feedbackToUser = feedbackToUser;
         this.showHelp = showHelp;
         this.exit = exit;
+        this.showNotes = showNotes;
+        this.patientName = patientName;
+        this.notesList = notesList;
     }
 
-    /**
-     * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
-     * and other fields set to their default value.
-     */
-    public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
-    }
 
+    // Add getters for all fields
     public String getFeedbackToUser() {
         return feedbackToUser;
     }
@@ -46,6 +61,18 @@ public class CommandResult {
 
     public boolean isExit() {
         return exit;
+    }
+
+    public boolean isShowNotes() {
+        return showNotes;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public List<Note> getNotesList() {
+        return notesList;
     }
 
     @Override

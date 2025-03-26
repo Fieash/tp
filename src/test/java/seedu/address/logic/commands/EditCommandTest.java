@@ -134,7 +134,7 @@ public class EditCommandTest {
     public void execute_duplicatePatientFilteredList_failure() {
         showPatientAtIndex(model, INDEX_FIRST_PATIENT);
 
-        // edit patient in filtered list into a duplicate in address book
+        // edit patient in filtered list into a duplicate in app
         Patient patientInList = model.getAddressBook().getPatientList().get(INDEX_SECOND_PATIENT.getZeroBased());
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT,
                 new EditPatientDescriptorBuilder(patientInList).build());
@@ -153,13 +153,13 @@ public class EditCommandTest {
 
     /**
      * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
+     * but smaller than size of app
      */
     @Test
     public void execute_invalidPatientIndexFilteredList_failure() {
         showPatientAtIndex(model, INDEX_FIRST_PATIENT);
         Index outOfBoundIndex = INDEX_SECOND_PATIENT;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of app list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPatientList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,

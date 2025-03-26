@@ -28,7 +28,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the app.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -75,7 +75,7 @@ Format: `help`
 
 ### Adding a patient: `add`
 
-Adds a patient to the address book.
+Adds a patient to the app.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
@@ -89,13 +89,13 @@ Examples:
 
 ### Listing all patients : `list`
 
-Shows a list of all patients in the address book.
+Shows a list of all patients in the app.
 
 Format: `list`
 
 ### Editing a patient : `edit`
 
-Edits an existing patient in the address book.
+Edits an existing patient in the app.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -132,7 +132,7 @@ Examples:
 
 ### Deleting a patient : `delete`
 
-Deletes the specified patient from the address book.
+Deletes the specified patient from the app.
 
 Format: `delete INDEX`
 
@@ -141,12 +141,76 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd patient in the address book.
+* `list` followed by `delete 2` deletes the 2nd patient in the app.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
+
+### Viewing a note of a patient : `viewnotes`
+
+Views all the notes of a specified patient in the app.
+
+Format: `viewnotes INDEX​`
+
+* Views all the notes of the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+*  `list` followed by `viewnotes 1` displays all notes and its contents that the 1st patient has.
+
+### Filter a note of a patient : `filternote`
+
+Search for notes of a specified patient in the app based on matching note titles.
+
+Format: `filternote INDEX [nt/NOTE TITLE]​`
+
+* Search for notes of the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+*  `list` followed by `filternote 1 nt/Consult` displays all notes and its contents that the 1st patient has that has the word `Consult` (or a word that contains `Consult`) in its note title.
+
+### Adding a note of a patient : `note`
+
+Adds a note of a specified patient in the app.
+
+Format: `note INDEX [nt/NOTE TITLE] [nc/NOTE CONTENTS]​`
+
+* Adds a note of the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+*  `list` followed by `note 1 nt/Consultation Session 2 nc/Patient is showing signs of depression and anxiety.` Adds a note to the 1st patient with the title `Consultation Session 2` and contents `Patient is showing signs of depression and anxiety.`.
+
+### Editing a note of a patient : `editnote`
+
+Edits a note of a specified patient in the app.
+
+Format: `editnote INDEX [nt/NOTE TITLE] [nc/NOTE CONTENTS]​`
+
+* Edits a note belonging to the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
+* Existing note contents will be updated to the input note contents.
+
+Examples:
+*  `list` followed by `editnote 1 nt/Consultation Session 2 nc/Patient is showing signs of depression and anxiety.` Edits the contents of the 1st patient's note with the title `Consultation Session 2` to `Patient is showing signs of depression and anxiety.`.
+
+### Deleting a note of a patient : `deletenote`
+
+Deletes a note of a specified patient in the app.
+
+Format: `deletenote INDEX [nt/NOTE TITLE]​`
+
+* Deletes a note of the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+*  `list` followed by `deletenote 1 nt/Consultation Session 2` Deletes the contents of the 1st patient's note with the title `Consultation Session 2`.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the app.
 
 Format: `clear`
 

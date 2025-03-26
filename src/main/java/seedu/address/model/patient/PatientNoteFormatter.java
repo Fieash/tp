@@ -1,8 +1,6 @@
 package seedu.address.model.patient;
 
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import seedu.address.model.note.Note;
 
@@ -19,15 +17,23 @@ public final class PatientNoteFormatter {
     }
 
     /**
-     * Formats a set of notes into a single string, sorted by creation date.
+     * Formats notes dynamically with numbering and proper wrapping.
      *
-     * @param notes The set of notes to format.
-     * @return A formatted string of note titles enclosed in square brackets, separated by spaces.
+     * @param notesSet A TreeSet of notes to be formatted. The TreeSet ensures that the notes are sorted by
+     *                 their natural ordering (which is expected to be by creation date).
+     * @return A formatted string representing the notes with numbering, content, and timestamps.
      */
-    public static String formatNotes(Set<Note> notes) {
-        TreeSet<Note> sortedNotes = new TreeSet<>(notes); // TreeSet automatically orders elements
-        return sortedNotes.stream()
-                .map(note -> "[" + note.getTitle() + "]")
-                .collect(Collectors.joining(" "));
+    public static String formatNotes(TreeSet<Note> notesSet) {
+        StringBuilder sb = new StringBuilder();
+        int noteNumber = 1;
+
+        for (Note note : notesSet) {
+            sb.append(noteNumber).append(". ").append(note.getTitle()).append("\n")
+                    .append("   ").append(note.getContent()).append("\n") // The UI will handle wrapping
+                    .append("   ").append(note.getDateTimeCreated().toString()).append("\n\n");
+            noteNumber++;
+        }
+
+        return sb.toString().trim();
     }
 }

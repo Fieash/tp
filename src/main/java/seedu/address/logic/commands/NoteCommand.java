@@ -18,7 +18,7 @@ import seedu.address.model.note.Note;
 import seedu.address.model.patient.Patient;
 
 /**
- * Adds a note to a patient in the address book.
+ * Adds a note to a patient in the app.
  */
 public class NoteCommand extends Command {
     public static final String COMMAND_WORD = "note";

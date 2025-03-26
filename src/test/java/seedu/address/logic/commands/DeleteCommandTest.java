@@ -71,7 +71,7 @@ public class DeleteCommandTest {
         showPatientAtIndex(model, INDEX_FIRST_PATIENT);
 
         Index outOfBoundIndex = INDEX_SECOND_PATIENT;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of app list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPatientList().size());
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);

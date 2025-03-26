@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -20,7 +21,7 @@ public class UiManager implements Ui {
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/neurosync-logo.png";
 
     private Logic logic;
     private MainWindow mainWindow;
@@ -49,8 +50,25 @@ public class UiManager implements Ui {
         }
     }
 
+    /**
+     * Retrieves and resizes the image to an appropriate size.
+     */
     private Image getImage(String imagePath) {
-        return new Image(MainApp.class.getResourceAsStream(imagePath));
+        // Load the original image
+        Image originalImage = new Image(MainApp.class.getResourceAsStream(imagePath));
+
+        // Resize the image to a more appropriate size for the icon
+        double iconWidth = 256; // Set to the size you want
+        double iconHeight = 256; // Set to the size you want
+
+        // Create an ImageView to scale the image
+        ImageView imageView = new ImageView(originalImage);
+        imageView.setFitWidth(iconWidth);
+        imageView.setFitHeight(iconHeight);
+        imageView.setPreserveRatio(true); // Maintain aspect ratio
+
+        // Get the resized image
+        return imageView.getImage();
     }
 
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
