@@ -67,6 +67,31 @@ public class NotesDisplayPanel extends UiPart<Region> {
     }
 
     /**
+     * Updates the panel with the specific filtered note from the specified patient.
+     *
+     * @param patient The patient whose notes should be displayed.
+     * @param matchingNote the notes that match the keyword
+     */
+    public void displayNotes(Patient patient, List<Note> matchingNote) {
+        requireNonNull(patient);
+        patientNameLabel.setText("Notes for " + patient.getName().fullName);
+
+        notesContainer.getChildren().clear();
+
+        if (matchingNote.isEmpty()) {
+            Label noNotesLabel = new Label("This patient has no notes.");
+            noNotesLabel.getStyleClass().add("filternote-content");
+            notesContainer.getChildren().add(noNotesLabel);
+            return;
+        }
+
+        int noteNumber = 1;
+        for (Note note : matchingNote) {
+            VBox noteBox = createNoteBox(note, noteNumber++);
+            notesContainer.getChildren().add(noteBox);
+        }
+    }
+    /**
      * Creates a formatted box for displaying a single note.
      *
      * @param note The note to display.

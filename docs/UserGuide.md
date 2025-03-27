@@ -3,266 +3,434 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+# **Welcome to the NeuroSync User Guide!**
+
+NeuroSync helps psychiatrists **manage patient records and session notes efficiently**. Choose a topic below to get step-by-step instructions, troubleshoot issues, and maximize your productivity!
+
+---
+
+## 🔍 **Search the User Guide**
+<input type="text" id="search-box" placeholder="Search this guide..." onkeyup="searchFunction()">
+<div id="search-dropdown" style="display:none; position:absolute; background:white; border:1px solid #ccc; width:300px; max-height:200px; overflow:auto;"></div>
+
+<script>
+function searchFunction() {
+    var input = document.getElementById("search-box");
+    var filter = input.value.toUpperCase();
+    var dropdown = document.getElementById("search-dropdown");
+    dropdown.innerHTML = "";
+    dropdown.style.display = filter.length > 0 ? "block" : "none";
+
+    // Select only the links in the Table of Contents
+    var tocLinks = document.querySelectorAll("a[href^='#']");
+    
+    tocLinks.forEach(function(link) {
+        var txtValue = link.textContent || link.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            var div = document.createElement("div");
+            div.innerHTML = '<a href="' + link.getAttribute('href') + '" style="display:block; padding:5px; text-decoration:none; color:black;">' + txtValue.substring(0, 50) + '...</a>';
+            div.style.borderBottom = "1px solid #ddd";
+            div.style.padding = "5px";
+            div.style.cursor = "pointer";
+            dropdown.appendChild(div);
+        }
+    });
+}
+</script>
+
+
+---
+
+## 📜 Table of Contents {#table-of-contents}
+1. [Introduction](#introduction)
+2. [Getting Started](#getting-started)
+3. [Core Features](#core-features)
+4. [Command Summary](#command-summary)
+5. [Commands & Usage](#commands--usage)
+   - [View All Patients](#listing-patients)
+   - [Finding a Patient](#finding-a-patient)
+   - [Adding a Patient](#adding-a-patient)
+   - [Editing a Patient](#editing-a-patient)
+   - [Deleting a Patient](#deleting-a-patient)
+   - [Viewing Notes](#viewing-notes)
+   - [Filtering Notes](#filtering-notes)
+   - [Adding a Note](#adding-a-note)
+   - [Edit a Note](#editing-a-note)
+   - [Delete a Note](#deleting-a-note)
+   - [Clear All Data](#clear-data)
+   - [Help](#help)
+6. [FAQs & Troubleshooting](#faqs--troubleshooting)
+7. [Technology Stack](#technology-stack)
+8. [Acknowledgemets](#acknowledgements)
+9. [Contact & Support](#contact-support)
+
+---
+
+## 📢 **Introduction** {#introduction}
+
+### What does NeuroSync do?
+NeuroSync **keeps track of patient details and session notes effortlessly**. No more searching through paper files—find what you need **instantly** using powerful search and filter commands.
+
+**Why Use NeuroSync?**
+✅ **Fast & Simple** - No unnecessary clicks, just type commands.
+✅ **Powerful Search & Filters** - Retrieve patient data in seconds.
+✅ **Organized & Secure** - Keep confidential data well-structured.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+## 🚀 **Getting Started** {#getting-started}
+
+### **1️⃣ Download & Install**
+1. **Download** the latest release from [NeuroSync Releases](https://github.com/AY2223S1-CS2103T-W14-4/tp/releases).
+2. Place the `NeuroSync.jar` file in your preferred directory.
+3. Open **Terminal/Command Prompt**.
+4. Navigate to the folder containing `NeuroSync.jar`.
+5. Run the app using:
+   ```bash
+   java -jar NeuroSync.jar
+   ```
+
+### **2️⃣ System Requirements**
+- **Java**: Version 17 or later
+- **OS Compatibility**: Windows, macOS, Linux
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+## 💡 **Core Features** {#core-features}
+
+- 📁 **Manage Patient Records** - Add, edit, and delete patient details.
+- 📝 **Session Notes** - Keep track of discussions, diagnoses, and treatments.
+- 🔎 **Powerful Search & Filters** - Quickly retrieve any patient or note.
+- ⚡ **Command-Based Interface** - Fast, efficient, and easy to use.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+## 🧭 **Command Summary** {#command-summary}
+
+| **Action**       | **Command Syntax** |
+|-----------------|-----------------------------------------------------------------------------------------|
+| **List Patients** | `list` |
+| **Find Patient** | `find KEYWORD [MORE_KEYWORDS]` |
+| **Add Patient**         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` |
+| **Edit Patient**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` |
+| **Delete Patient**      | `delete INDEX` |
+|-----------------|-----------------------------------------------------------------------------------------|
+| **View Notes**  | `viewnotes INDEX` |
+| **Filter Note** | `filternote INDEX nt/TITLE_KEYWORD` |
+| **Add Note**    | `note INDEX nt/TITLE nc/CONTENT` |
+| **Edit Note**   | `editnote INDEX nt/TITLE nc/CONTENT` |
+| **Delete Note** | `deletenote INDEX nt/TITLE` |
+|-----------------|-----------------------------------------------------------------------------------------|
+| **Clear Data** | `clear` |
+| **Help** | `help` |
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+
+## 🎯 **Commands & Usage** {#commands--usage}
+
+Each command is designed to make patient and session management **fast and intuitive**.
+
+### **Listing Patients** {#listing-patients}
+```bash
+list
+```
+**Example:**
+```bash
+list
+```
+✔️ **Expected Output:**
+```
+1. John Doe (Phone: 98005442, Email: john.doe@email.com)
+2. Jane Smith (Phone: 91234567, Email: jane.smith@example.com)
+```
+⚠️ **Warning:** This will show all patients, so be mindful if you have a large list.<br>
+💡 **Tip:** Use the **Find** command to quickly locate a patient.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Finding a Patient** {#finding-a-patient}
+```bash
+find KEYWORD [MORE_KEYWORDS]
+```
+**Example:**
+```bash
+find John
+```
+✔️ **Expected Output:**
+```
+1. John Doe (Phone: 98005442, Email: john.doe@email.com)
+```
+⚠️ **Warning:** Multiple matches may be returned if you use a common name.<br>
+💡 **Tip:** Use specific names or IDs to narrow your search.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Adding a Patient** {#adding-a-patient}
+```bash
+add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​
+```
+**Example:**
+```bash
+add n/John Doe p/98005442 e/john.doe@email.com a/123 Clementi Street t/ADHD
+```
+✔️ **Expected Output:**
+```
+Patient added: John Doe (Phone: 98005442, Email: john.doe@email.com)
+```
+⚠️ **Warning:** Avoid duplicate names for clarity.<br>
+💡 **Tip:** Use **tags** (`t/`) to categorize patients (e.g., `t/Anxiety`).
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Editing a Patient** {#editing-a-patient}
+```bash
+edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​
+```
+**Example:**
+```bash
+edit 1 p/91234567 e/john.doe@newemail.com
+```
+✔️ **Expected Output:**
+```
+Updated patient: John Doe (Phone: 91234567, Email: john.doe@newemail.com)
+```
+⚠️ **Warning:** Only update fields that need changing to avoid accidental edits.<br>
+💡 **Tip:** You can edit just one piece of data, like only the phone number or email.
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Deleting a Patient** {#deleting-a-patient}
+```bash
+delete INDEX
+```
+**Example:**
+```bash
+delete 2
+```
+✔️ **Expected Output:**
+```
+Deleted patient at index 2.
+```
+⚠️ **Warning:** This action is **irreversible**. Double-check before deleting.<br>
+💡 **Tip:** Be careful when using this command, especially with large patient lists.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Viewing Notes** {#viewing-notes}
+```bash
+viewnotes INDEX
+```
+**Example:**
+```bash
+viewnotes 1
+```
+✔️ **Expected Output:**
+```
+1. Mood Assessment - Discussed mood swings.
+2. Sleep Patterns - Irregular sleep schedule.
+```
+⚠️ **Warning:** If a patient has many notes, it may take a moment to load.<br>
+💡 **Tip:** Use **Filter Notes** to narrow down results if you have many notes.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Filtering Notes** {#filtering-notes}
+```bash
+filternote INDEX nt/TITLE_KEYWORD
+```
+**Example:**
+```bash
+filternote 1 nt/anxiety
+```
+✔️ **Expected Output:**
+```
+Showing notes for Patient 1 with keyword: "anxiety"
+```
+⚠️ **Warning:** Be specific with keywords to avoid too many results.<br>
+💡 **Tip:** Keywords should be part of the note's title for better results.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Adding a Note** {#adding-a-note}
+```bash
+note INDEX nt/TITLE nc/CONTENT
+```
+**Example:**
+```bash
+note 1 nt/Mood Assessment nc/Discussed mood swings and coping strategies.
+```
+✔️ **Expected Output:**
+```
+Note added for Patient 1: "Mood Assessment"
+```
+⚠️ **Warning:** Ensure the title is relevant and specific to the session.<br>
+💡 **Tip:** Keep notes short and concise, highlighting the most important aspects.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Editing a Note** {#editing-a-note}
+```bash
+editnote INDEX nt/TITLE nc/CONTENT
+```
+**Example:**
+```bash
+editnote 1 nt/Mood Assessment nc/Updated content with more details.
+```
+✔️ **Expected Output:**
+```
+Note updated for Patient 1: "Mood Assessment"
+```
+⚠️ **Warning:** Changes are permanent once saved, so be sure the content is correct.<br>
+💡 **Tip:** Edit only the necessary fields without altering other details.
+
+
+[🔝 Back to Top](#table-of-contents)
+
+---
+
+### **Deleting a Note** {#deleting-a-note}
+```bash
+deletenote INDEX nt/TITLE
+```
+**Example:**
+```bash
+deletenote 1 nt/Mood Assessment
+```
+✔️ **Expected Output:**
+```
+Deleted note: "Mood Assessment" for Patient 1.
+```
+⚠️ **Warning:** **Deleted notes cannot be recovered.**<br>
+💡 **Tip:** Keep backups if needed.
 
-* Table of Contents
-{:toc}
 
---------------------------------------------------------------------------------------------------------------------
+[🔝 Back to Top](#table-of-contents)
 
-## Quick start
+---
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+### **Clear All Data** {#clear-data}
+```bash
+clear
+```
+**Example:**
+```bash
+clear
+```
+✔️ **Expected Output:**
+```
+All patient and note data cleared.
+```
+⚠️ **Warning:** This is a **permanent** action. Use with caution.<br>
+💡 **Tip:** Regularly back up your data before using this command.
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+[🔝 Back to Top](#table-of-contents)
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+---
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+### **Help** {#help}
+```bash
+help
+```
+**Example:**
+```bash
+help
+```
+✔️ **Expected Output:**
+```
+List of available commands and syntax.
+```
+⚠️ **Warning:** This is just a list of commands, not a tutorial.<br>
+💡 **Tip:** Use **help** if you forget a command or need to refer to syntax quickly.
 
-   * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the app.
+[🔝 Back to Top](#table-of-contents)
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+---
 
-   * `exit` : Exits the app.
+## ❓ **FAQs & Troubleshooting** {#faqs--troubleshooting}
 
-1. Refer to the [Features](#features) below for details of each command.
+**Q: Where is my data stored?**  
+**A:** Your data is saved in `addressbook.json` inside the `/data` folder.
 
---------------------------------------------------------------------------------------------------------------------
+**Q: Can I undo a deletion?**  
+**A:** No. There is **no undo** feature, so backup your data frequently.
 
-## Features
+**Q: How do I transfer data to another device?**  
+**A:** Copy the `addressbook.json` file from `/data` and paste it into the same directory on the new device.
 
-<div markdown="block" class="alert alert-info">
+**Q: What happens when I run `clear`?**  
+**A:** It **deletes all data permanently**. Use it with caution.
 
-**:information_source: Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+[🔝 Back to Top](#table-of-contents)
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+---
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+## 🛠 Technology Stack {#technology-stack}
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+- Java 17
+- JavaFX for UI
+- Gradle for build automation
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</div>
+[🔝 Back to Top](#table-of-contents)
 
-### Viewing help : `help`
+---
 
-Shows a message explaning how to access the help page.
+## 🙌 Acknowledgements {#acknowledgements}
 
-![help message](images/helpMessage.png)
+This project is based on the AddressBook-Level3 project by the SE-EDU initiative.
 
-Format: `help`
+Visit [se-education.org](https://se-education.org) for more open-source CS education projects.
 
 
-### Adding a patient: `add`
+[🔝 Back to Top](#table-of-contents)
 
-Adds a patient to the app.
+---
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+## 📬 Contact & Support {#contact-support}
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A patient can have any number of tags (including 0)
-</div>
+For issues and contributions, please raise an issue or pull request in the [GitHub repository](https://github.com/AY2425S2-CS2103T-F13-1/tp).
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-### Listing all patients : `list`
+[🔝 Back to Top](#table-of-contents)
 
-Shows a list of all patients in the app.
-
-Format: `list`
-
-### Editing a patient : `edit`
-
-Edits an existing patient in the app.
-
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-
-* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
-* You can remove all the patient’s tags by typing `t/` without
-    specifying any tags after it.
-
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
-
-### Locating patients by name: `find`
-
-Finds patients whose names, phone numbers, email addresses or addresses contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Name / phone number / email address / address can be searched separately or together.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Patients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find 98765432` returns `John Doe`<br>
-* ![result for `find 98765432`](images/findPhoneNumberResult.png)
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-### Deleting a patient : `delete`
-
-Deletes the specified patient from the app.
-
-Format: `delete INDEX`
-
-* Deletes the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd patient in the app.
-* `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
-
-### Viewing a note of a patient : `viewnotes`
-
-Views all the notes of a specified patient in the app.
-
-Format: `viewnotes INDEX​`
-
-* Views all the notes of the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-*  `list` followed by `viewnotes 1` displays all notes and its contents that the 1st patient has.
-
-### Filter a note of a patient : `filternote`
-
-Search for notes of a specified patient in the app based on matching note titles.
-
-Format: `filternote INDEX [nt/NOTE TITLE]​`
-
-* Search for notes of the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-*  `list` followed by `filternote 1 nt/Consult` displays all notes and its contents that the 1st patient has that has the word `Consult` (or a word that contains `Consult`) in its note title.
-
-### Adding a note of a patient : `note`
-
-Adds a note of a specified patient in the app.
-
-Format: `note INDEX [nt/NOTE TITLE] [nc/NOTE CONTENTS]​`
-
-* Adds a note of the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-*  `list` followed by `note 1 nt/Consultation Session 2 nc/Patient is showing signs of depression and anxiety.` Adds a note to the 1st patient with the title `Consultation Session 2` and contents `Patient is showing signs of depression and anxiety.`.
-
-### Editing a note of a patient : `editnote`
-
-Edits a note of a specified patient in the app.
-
-Format: `editnote INDEX [nt/NOTE TITLE] [nc/NOTE CONTENTS]​`
-
-* Edits a note belonging to the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
-* Existing note contents will be updated to the input note contents.
-
-Examples:
-*  `list` followed by `editnote 1 nt/Consultation Session 2 nc/Patient is showing signs of depression and anxiety.` Edits the contents of the 1st patient's note with the title `Consultation Session 2` to `Patient is showing signs of depression and anxiety.`.
-
-### Deleting a note of a patient : `deletenote`
-
-Deletes a note of a specified patient in the app.
-
-Format: `deletenote INDEX [nt/NOTE TITLE]​`
-
-* Deletes a note of the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-*  `list` followed by `deletenote 1 nt/Consultation Session 2` Deletes the contents of the 1st patient's note with the title `Consultation Session 2`.
-
-### Clearing all entries : `clear`
-
-Clears all entries from the app.
-
-Format: `clear`
-
-### Exiting the program : `exit`
-
-Exits the program.
-
-Format: `exit`
-
-### Saving the data
-
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-### Editing the data file
-
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</div>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
---------------------------------------------------------------------------------------------------------------------
-
-## FAQ
-
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Known issues
-
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Command summary
-
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**note** | `note INDEX [nt/TITLE] [nc/CONTENT]`<br> e.g.,`note 1 nt/JohnFirstCrashout nc/john crashed out when confronted by amy`
-**deletenote | `deletenote INDEX [nt/TITLE]` <br> e.g., `deletenote 1 nt/JohnFirstCrashout`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
-**Help** | `help`
+🚀 *Enjoy using NeuroSync!*

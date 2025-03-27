@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -15,9 +16,11 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.FilterNoteCommand;
 import seedu.address.logic.commands.ViewNotesCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.note.Note;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -198,6 +201,8 @@ public class MainWindow extends UiPart<Stage> {
             // Check if this is a ViewNotesCommand result
             if (commandText.trim().toLowerCase().startsWith(ViewNotesCommand.COMMAND_WORD)) {
                 handleViewNotesCommand(commandResult, commandText);
+            } else if (commandText.trim().toLowerCase().startsWith(FilterNoteCommand.COMMAND_WORD)) {
+                handleFilterNoteCommand(commandResult, commandText);
             } else {
                 // Reset notes panel for non-viewnotes commands
                 notesDisplayPanel.reset();
@@ -248,6 +253,37 @@ public class MainWindow extends UiPart<Stage> {
             }
         } catch (Exception e) {
             logger.warning("Error handling ViewNotesCommand: " + e.getMessage());
+            // Fallback to showing the raw output in case of error
+            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+        }
+    }
+
+    /**
+     * Handles the special case of a FilterNoteCommand by displaying the notes in the
+     * dedicated NotesDisplayPanel.
+     *
+     * @param commandResult The result of the command execution
+     * @param commandText The original command text
+     */
+    private void handleFilterNoteCommand(CommandResult commandResult, String commandText) {
+        try {
+            // Display a simple confirmation message in the result display
+            resultDisplay.setFeedbackToUser("Displaying notes. See notes panel below.");
+
+            // Extract the index from the command
+            String[] parts = commandText.trim().split("\\s+");
+            if (parts.length < 2) {
+                return; // Invalid command format, already handled elsewhere
+            }
+
+            int index = Integer.parseInt(parts[1]) - 1; // Convert to zero-based index
+            if (index >= 0 && index < logic.getFilteredPatientList().size()) {
+                Patient patient = logic.getFilteredPatientList().get(index);
+                List<Note> matchingNotes = commandResult.getNotesList();
+                notesDisplayPanel.displayNotes(patient, matchingNotes);
+            }
+        } catch (Exception e) {
+            logger.warning("Error handling FilterNoteCommand: " + e.getMessage());
             // Fallback to showing the raw output in case of error
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
         }

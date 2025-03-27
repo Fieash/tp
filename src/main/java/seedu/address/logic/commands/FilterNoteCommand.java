@@ -26,9 +26,9 @@ public class FilterNoteCommand extends Command {
             + "Parameters: KEYWORDS ...\n"
             + "Example: " + COMMAND_WORD + " [index]" + " nt/[title]";
 
-    public static final String MESSAGE_SUCCESS = "Note for %1$s:\n\n%2$s";
+    public static final String MESSAGE_SUCCESS = "Displaying notes for %1$s";
 
-    public static final String MESSAGE_NO_NOTES = "Patient %1$s has no notes.";
+    public static final String MESSAGE_NO_NOTES = "This patient has no notes.";
 
     public static final String MESSAGE_INVALID_INDEX = "Invalid index! Please provide a positive integer within range.";
 
@@ -72,11 +72,8 @@ public class FilterNoteCommand extends Command {
             throw new CommandException(MESSAGE_NO_TITLED_NOTE);
         }
 
-        String notesContent = matchingNotes.stream()
-                .map(note -> "Title: " + note.getTitle() + "\nContent: " + note.getContent())
-                .collect(Collectors.joining("\n\n"));
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, patientToFilter.getName().fullName, notesContent));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, patientToFilter.getName().fullName),
+                false, false, false, null, matchingNotes);
     }
 
     @Override
